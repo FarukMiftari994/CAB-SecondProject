@@ -12,13 +12,6 @@ fetch("https://api.quotable.io/quotes/random?limit=3")
         response[i].author.toUpperCase();
       document.getElementById("date" + i).innerHTML = response[i].dateAdded;
     }
-
-    // document.getElementById("tags").innerHTML = response.tags;
-    // document.getElementById("quote").innerHTML = response.content;document.getElementById("quote").innerHTML = response.content;
-    // const testing = document.getElementsByClassName("card-title");
-    // // for
-    // document.getElementById("author").innerHTML = response.author;
-    // document.getElementById("date").innerHTML = response.dateAdded;
   })
   .catch((err) => {
     console.log(err);
