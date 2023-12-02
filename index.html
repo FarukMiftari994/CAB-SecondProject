@@ -19,31 +19,30 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <a class="navbar-brand" href="index.html">Quotes</a>
+        <a id="a" type="submit" class="navbar-brand" href="#">Quotes</a>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
+          </li> -->
           <!-- <li class="nav-item">
             <a class="nav-link" aria-current="page" href="allquotes.html">Favourites</a>
           </li> -->
           
         </ul>
-        <form  class="d-flex" role="search">
-          <button type="button" id="all" class="btn btn-outline-secondary">All</button>
-          <button type="button" id="business" class="btn btn-outline-secondary">Business</button>
-          <button type="button" id="inspirational" class="btn btn-outline-secondary">Inspirational</button>
-          <button type="button" id="success" class="btn btn-outline-secondary">Success</button>
-          <div>
-          </div>
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="d-flex" role="search">
+          <select id="authors" class="btn btn-outline-secondary">
+          <option value="all">Tags</option>
+          </select>
+          <button id="test" type="submit" class="btn btn-outline-secondary">All</button>
+          <input class="form-control me-2" id="author">
+          <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> -->
         </div>
-          <button type="button"  id="search" class="btn btn-outline-secondary"><i class="fa-solid fa-magnifying-glass"></i></button>
+          <button  id="search" class="btn btn-outline-secondary"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
       </div>
     </div>
   </nav>
-    <div class="container min-vh-100 d-flex justify-content-md-center align-items-center">
+    <!-- <div id="randomContainer" class="container min-vh-100 d-flex justify-content-md-center align-items-center">
       <div class="row">
         <div class="col col-lg-4">
           <div class="card text-center align-items-center">
@@ -79,11 +78,15 @@
             </div>
           </div>
      </div>
-    </div>
-    <div id="cards" class="container min-vh-100 d-flex justify-content-md-center align-items-center">
+    </div> -->
+   
+    <!-- <div class="hide"> -->
+      <div class="div">
+    <div id="cards" class="container min-vh-100 d-flex justify-content-md-center align-items-start mt-5">
       
       </div>
     </div>
+    
     <footer class=" text-center">
         <!-- Grid container -->
         <div class="container p-4 pb-0">
