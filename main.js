@@ -32,6 +32,7 @@ function fetchData() {
       allData(result.results);
       fillTheAuthors(result.results);
       addListeners(result.results);
+
       // builddataoptions(result.results)
       // fillTheQuotes(result.results);
     });
@@ -53,11 +54,13 @@ function allData(result) {
   cards.innerHTML = "";
   const cardRow = document.createElement("div");
   cardRow.classList.add("row");
+  cardRow.classList.add("justify-content-around");
   cards.appendChild(cardRow);
   for (let i = 0; i < result.length; i++) {
     const cardColumn = document.createElement("div");
     cardColumn.classList.add("col");
     cardColumn.classList.add("col-lg-4");
+    cardColumn.style = "min-width: 380px;";
     cardRow.appendChild(cardColumn);
     const cardHolder = document.createElement("div");
     cardHolder.classList.add("card");
@@ -85,6 +88,44 @@ function allData(result) {
   }
 }
 
+function noData() {
+  const cards = document.getElementById("cards");
+  cards.innerHTML = "";
+  const cardRow = document.createElement("div");
+  cardRow.classList.add("row");
+  cardRow.classList.add("justify-content-around");
+  cards.appendChild(cardRow);
+
+  const cardColumn = document.createElement("div");
+  cardColumn.classList.add("col");
+  cardColumn.classList.add("col-lg-4");
+  cardColumn.style = "min-width: 380px;";
+  cardRow.appendChild(cardColumn);
+  const cardHolder = document.createElement("div");
+  cardHolder.classList.add("card");
+  cardHolder.classList.add("text-center");
+  cardHolder.classList.add("align-items-center");
+  cardColumn.append(cardHolder);
+  const tag = document.createElement("div");
+  tag.classList.add("card-header");
+  tag.classList.add("fs-5");
+  tag.innerHTML = "OOPS!";
+  const cardBody = document.createElement("div");
+  cardBody.classList.add("card-body");
+  const quote = document.createElement("p");
+  quote.classList.add("card-text");
+  quote.innerHTML = "";
+  const author = document.createElement("h5");
+  author.classList.add("card-title");
+  author.innerHTML = "There's no Quote with the 'Selected Filters'";
+  cardBody.append(quote, author);
+  const date = document.createElement("div");
+  date.classList.add("card-footer");
+  date.classList.add("text-muted");
+  date.innerHTML = "Error 404";
+  cardHolder.append(tag, cardBody, date);
+}
+
 function fillTheTags(result) {
   const allTags = document.getElementById("tags");
   const allStrings = result.map((tags) => tags.name);
@@ -98,13 +139,23 @@ function fillTheTags(result) {
   });
 }
 
+function fillTheAuthors(result) {
+  const arr = document.getElementById("input");
+  arr.setAttribute("list", "myList");
+  const dl = document.createElement("DATALIST");
+  dl.setAttribute("id", "myList");
+  const theValues = result.map((quotes) => quotes.author);
+  const uniqueValues = new Set(theValues);
+  uniqueValues.forEach((quotes) => {
+    const option = document.createElement("OPTION");
+    option.value = quotes;
+    dl.appendChild(option);
+  });
+  arr.appendChild(dl);
+}
 function addEvent() {
   const quotes = document.getElementById("h-quotes");
   quotes.addEventListener("click", (event) => {
-    // const input = document.querySelector("input");
-    // allData();
-    // const second = document.querySelector("cards");
-    // cards.innerHTML = "";
     randomFetch();
   });
 
@@ -116,62 +167,63 @@ function addEvent() {
 addEvent();
 
 function addListeners(tagsArray) {
-  console.log(tagsArray);
+  const searchBar = document.querySelector("form");
+  const input = document.getElementById("input");
   const selectTag = document.getElementById("tags");
-  selectTag.addEventListener("change", (event) => {
-    console.log(selectTag.value);
 
-    if (event.target.value === "all") {
-      allData(tagsArray);
+  selectTag.addEventListener("change", (event) => {
+    const result = filteredArrayByTag(selectTag.value, tagsArray);
+    console.log(result);
+    if (input.value !== "") {
+      const result2 = filteredArrayByAuthor(input.value, result);
+      checkForTag(result2);
     } else {
-      const filteredArray = tagsArray.filter((t) => {
-        return t.tags.includes(selectTag.value);
-      });
-      console.log(event.target.value);
-      allData(filteredArray);
+      checkForTag(result);
     }
   });
 
-  const searchBar = document.querySelector("form");
   searchBar.addEventListener("submit", (event) => {
     event.preventDefault();
-    const input = document.getElementById("input");
-    // if (input.value === "") {
-    //   allData(tagsArray);
-    // } else {
-    const filteredArray = tagsArray.filter((a) => {
-      return a.author === input.value;
-    });
-    allData(filteredArray);
-    console.log(filteredArray);
-    // }
+    const result = filteredArrayByAuthor(input.value.toLowerCase(), tagsArray);
+    console.log(result);
+    if (selectTag.value !== "") {
+      const result2 = filteredArrayByTag(selectTag.value, result);
+      checkForTag(result2);
+    } else {
+      checkForTag(result);
+    }
     // allData(input.value);
-    console.log(input.value);
   });
 }
-// function hideElement(id) {
-//   const element = document.getElementById(id);
-//   element.classList.add("hide");
-// }
 
-// function showElement(id) {
-//   const element = document.getElementById(id);
-//   element.classList.remove("hide");
-// }
+function filteredArrayByTag(SelectedTag, tagsArray) {
+  if (SelectedTag === "all") {
+    return tagsArray;
+  } else {
+    const filteredArray = tagsArray.filter((t) => {
+      return t.tags.includes(SelectedTag);
+    });
+    return filteredArray;
+    console.log(filteredArray);
+  }
+}
 
-function fillTheAuthors(result) {
-  const arr = document.getElementById("input");
-  arr.setAttribute("list", "myList");
-  const dl = document.createElement("DATALIST");
-  dl.setAttribute("id", "myList");
-  // for (let i = 0; i < result.length; i++) {
-  const theValues = result.map((quotes) => quotes.author);
-  const uniqueValues = new Set(theValues);
-  uniqueValues.forEach((quotes) => {
-    const option = document.createElement("OPTION");
-    option.value = quotes;
-    dl.appendChild(option);
-  });
-  arr.appendChild(dl);
-  // }
+function filteredArrayByAuthor(SelectedAuthor, tagsArray) {
+  if (SelectedAuthor === "") {
+    return tagsArray;
+  } else {
+    const filteredArray = tagsArray.filter((a) => {
+      return a.author.toLowerCase().includes(SelectedAuthor);
+    });
+    return filteredArray;
+    console.log(filteredArray);
+  }
+}
+
+function checkForTag(result) {
+  if (result.length === 0) {
+    noData();
+  } else {
+    allData(result);
+  }
 }
