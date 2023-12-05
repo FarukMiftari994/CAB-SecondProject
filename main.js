@@ -28,10 +28,10 @@ function fetchData() {
   fetch("https://api.quotable.io/quotes?page=7&limit=150")
     .then((res) => res.json())
     .then((result) => {
-      console.log("fetchData");
       console.log(result);
       allData(result.results);
       fillTheAuthors(result.results);
+      addListeners(result.results);
       // builddataoptions(result.results)
       // fillTheQuotes(result.results);
     });
@@ -43,13 +43,12 @@ function fetchData2() {
     .then((res) => res.json())
     .then((result) => {
       console.log(result);
-      fillTheQuotes(result);
+      fillTheTags(result);
     });
 }
 fetchData2();
 
 function allData(result) {
-  console.log(result);
   const cards = document.getElementById("cards");
   cards.innerHTML = "";
   const cardRow = document.createElement("div");
@@ -86,22 +85,22 @@ function allData(result) {
   }
 }
 
-function fillTheQuotes(result) {
-  const allQuotes = document.getElementById("authors");
-  const allStrings = result.map((quotes) => quotes.name);
+function fillTheTags(result) {
+  const allTags = document.getElementById("tags");
+  const allStrings = result.map((tags) => tags.name);
   const uniqueValues = new Set(allStrings);
   console.log(uniqueValues);
-  uniqueValues.forEach((quotes) => {
+  uniqueValues.forEach((tags) => {
     const option = document.createElement("option");
-    option.value = quotes;
-    option.innerHTML = quotes;
-    allQuotes.appendChild(option);
+    option.value = tags;
+    option.innerHTML = tags;
+    allTags.appendChild(option);
   });
 }
 
 function addEvent() {
-  const form = document.getElementById("a");
-  form.addEventListener("click", (event) => {
+  const quotes = document.getElementById("h-quotes");
+  quotes.addEventListener("click", (event) => {
     // const input = document.querySelector("input");
     // allData();
     // const second = document.querySelector("cards");
@@ -109,15 +108,47 @@ function addEvent() {
     randomFetch();
   });
 
-  const form2 = document.querySelector("form");
-  form2.addEventListener("submit", (event) => {
-    event.preventDefault();
+  const all = document.getElementById("allTags");
+  all.addEventListener("click", (event) => {
     fetchData();
   });
 }
-
 addEvent();
 
+function addListeners(tagsArray) {
+  console.log(tagsArray);
+  const selectTag = document.getElementById("tags");
+  selectTag.addEventListener("change", (event) => {
+    console.log(selectTag.value);
+
+    if (event.target.value === "all") {
+      allData(tagsArray);
+    } else {
+      const filteredArray = tagsArray.filter((t) => {
+        return t.tags.includes(selectTag.value);
+      });
+      console.log(event.target.value);
+      allData(filteredArray);
+    }
+  });
+
+  const searchBar = document.querySelector("form");
+  searchBar.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const input = document.getElementById("input");
+    // if (input.value === "") {
+    //   allData(tagsArray);
+    // } else {
+    const filteredArray = tagsArray.filter((a) => {
+      return a.author === input.value;
+    });
+    allData(filteredArray);
+    console.log(filteredArray);
+    // }
+    // allData(input.value);
+    console.log(input.value);
+  });
+}
 // function hideElement(id) {
 //   const element = document.getElementById(id);
 //   element.classList.add("hide");
@@ -129,18 +160,18 @@ addEvent();
 // }
 
 function fillTheAuthors(result) {
-  const arr = document.getElementById("author");
+  const arr = document.getElementById("input");
   arr.setAttribute("list", "myList");
   const dl = document.createElement("DATALIST");
   dl.setAttribute("id", "myList");
-  for (i = 0; i < result.length; i++) {
-    const theValues = result.map((quotes) => quotes.author);
-    const uniqueValues = new Set(theValues);
-    uniqueValues.forEach((quotes) => {
-      const option = document.createElement("OPTION");
-      option.value = quotes;
-      dl.appendChild(option);
-    });
-    arr.appendChild(dl);
-  }
+  // for (let i = 0; i < result.length; i++) {
+  const theValues = result.map((quotes) => quotes.author);
+  const uniqueValues = new Set(theValues);
+  uniqueValues.forEach((quotes) => {
+    const option = document.createElement("OPTION");
+    option.value = quotes;
+    dl.appendChild(option);
+  });
+  arr.appendChild(dl);
+  // }
 }
