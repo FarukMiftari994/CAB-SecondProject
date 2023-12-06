@@ -70,7 +70,11 @@ function allData(result) {
     const tag = document.createElement("div");
     tag.classList.add("card-header");
     tag.classList.add("fs-5");
-    tag.innerHTML = result[i].tags;
+    if (result[i].tags == "") {
+      tag.innerHTML = "No Tag Found";
+    } else {
+      tag.innerHTML = result[i].tags;
+    }
     const cardBody = document.createElement("div");
     cardBody.classList.add("card-body");
     const quote = document.createElement("p");
@@ -95,7 +99,6 @@ function noData() {
   cardRow.classList.add("row");
   cardRow.classList.add("justify-content-around");
   cards.appendChild(cardRow);
-
   const cardColumn = document.createElement("div");
   cardColumn.classList.add("col");
   cardColumn.classList.add("col-lg-4");
@@ -153,6 +156,7 @@ function fillTheAuthors(result) {
   });
   arr.appendChild(dl);
 }
+
 function addEvent() {
   const quotes = document.getElementById("h-quotes");
   quotes.addEventListener("click", (event) => {
@@ -169,6 +173,7 @@ addEvent();
 function addListeners(tagsArray) {
   const searchBar = document.querySelector("form");
   const input = document.getElementById("input");
+
   const selectTag = document.getElementById("tags");
 
   selectTag.addEventListener("change", (event) => {
@@ -193,6 +198,13 @@ function addListeners(tagsArray) {
       checkForTag(result);
     }
     // allData(input.value);
+  });
+
+  const button = document.getElementById("clear");
+  button.addEventListener("click", () => {
+    input.value = "";
+    selectTag.value = "all";
+    allData(tagsArray);
   });
 }
 

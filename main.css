@@ -89,68 +89,113 @@ footer > .text-center {
   .navbar {
     min-width: 420px;
   }
-}
 
-@media only screen and (max-width: 750px) {
-  .navbar {
-    margin: 10px 90px;
-  }
-}
-
-@media only screen and (max-width: 670px) {
   footer {
-    min-width: 153px;
-    min-height: 160px;
+    /* min-width: 450px; */
+    margin: 10px 200px;
   }
 }
 
-@media only screen and (max-width: 630px) {
-  .navbar {
-    margin: 10px 70px;
-  }
-}
-
-@media only screen and (max-width: 580px) {
-  .navbar {
-    margin: 10px 50px;
-  }
-}
-
-@media only screen and (max-width: 530px) {
-  .navbar {
-    margin: 10px 30px;
-  }
-}
-
-@media only screen and (max-width: 495px) {
-  .navbar {
-    margin: 10px 10px;
-  }
-}
-
-@media only screen and (max-width: 460px) {
-  .navbar {
-    min-width: 360px;
-    margin: 10px 10px;
-  }
-
-  .card {
-    min-width: 300px;
-  }
-}
-
-@media only screen and (max-width: 400px) {
-  .navbar {
-    min-width: 300px;
-  }
-
-  .card {
-    max-width: 100px;
-  }
-}
-
-/* @media only screen and (max-width: 350px) {
+@media only screen and (max-width: 850px) {
   footer {
-    margin-left: 200px;
+    margin: 10px 170px;
   }
-} */
+}
+
+@media only screen and (max-width: 790px) {
+  footer {
+    margin: 10px 140px;
+  }
+
+  @media only screen and (max-width: 750px) {
+    .navbar {
+      margin: 10px 90px;
+    }
+    footer {
+      margin: 10px 110px;
+    }
+  }
+
+  @media only screen and (max-width: 680px) {
+    footer {
+      margin: 10px 100px;
+    }
+  }
+
+  @media only screen and (max-width: 660px) {
+    footer {
+      margin: 10px 90px;
+    }
+  }
+
+  @media only screen and (max-width: 630px) {
+    .navbar {
+      margin: 10px 70px;
+    }
+
+    footer {
+      margin: 10px 70px;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    footer {
+      margin: 10px 50px;
+    }
+  }
+
+  @media only screen and (max-width: 580px) {
+    .navbar {
+      margin: 10px 50px;
+    }
+  }
+
+  @media only screen and (max-width: 560px) {
+    footer {
+      margin: 10px 30px;
+    }
+  }
+
+  @media only screen and (max-width: 530px) {
+    .navbar {
+      margin: 10px 30px;
+    }
+    footer {
+      margin: 10px 10px;
+    }
+  }
+
+  @media only screen and (max-width: 495px) {
+    .navbar {
+      margin: 10px 10px;
+    }
+  }
+
+  @media only screen and (max-width: 460px) {
+    .navbar {
+      min-width: 360px;
+      margin: 10px 10px;
+    }
+  }
+
+  @media only screen and (max-width: 400px) {
+    .navbar {
+      min-width: 300px;
+    }
+
+    .card {
+      max-width: 100px;
+    }
+  }
+
+  @media only screen and (max-width: 340px) {
+    .card {
+      margin: 10px;
+      min-width: 300px;
+    }
+
+    footer {
+      min-width: 300px;
+    }
+  }
+}
