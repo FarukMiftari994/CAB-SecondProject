@@ -3,8 +3,13 @@ function randomFetch() {
     .then((response) => response.json())
     .then((result) => {
       console.log("randomFetch");
-      console.log(result);
-      allData(result);
+      console.log("this is it :", result);
+      console.log(result.statusMessage);
+      if (!result.statusMessage) {
+        allData(result);
+      } else {
+        WentWrong();
+      }
       // for (let i = 0; i < result.length; i++) {
       //   document.getElementById("tags" + i).innerHTML = result[i].tags;
       //   //   const quote = document.getElementById("quote" + i);
@@ -18,8 +23,9 @@ function randomFetch() {
     })
     .catch((error) => {
       console.log(error);
+      WentWrong();
     });
-}
+} //deploying
 randomFetch();
 
 ///////////
@@ -29,12 +35,20 @@ function fetchData() {
     .then((res) => res.json())
     .then((result) => {
       console.log(result);
-      allData(result.results);
-      fillTheAuthors(result.results);
-      addListeners(result.results);
+      if (!result.statusMessage) {
+        allData(result.results);
+        fillTheAuthors(result.results);
+        addListeners(result.results);
+      } else {
+        WentWrong();
+      }
 
       // builddataoptions(result.results)
       // fillTheQuotes(result.results);
+    })
+    .catch((error) => {
+      console.log(error);
+      WentWrong();
     });
 }
 fetchData();
@@ -44,7 +58,15 @@ function fetchData2() {
     .then((res) => res.json())
     .then((result) => {
       console.log(result);
-      fillTheTags(result);
+      if (!result.statusMessage) {
+        fillTheTags(result);
+      } else {
+        alert("Something went wrong with the tags");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      alert("Something went wrong with the tags");
     });
 }
 fetchData2();
@@ -129,12 +151,47 @@ function noData() {
   cardHolder.append(tag, cardBody, date);
 }
 
+function WentWrong() {
+  const cards = document.getElementById("cards");
+  cards.innerHTML = "";
+  const cardRow = document.createElement("div");
+  cardRow.classList.add("row");
+  cardRow.classList.add("justify-content-around");
+  cards.appendChild(cardRow);
+  const cardColumn = document.createElement("div");
+  cardColumn.classList.add("col");
+  cardColumn.classList.add("col-lg-4");
+  cardColumn.style = "min-width: 380px;";
+  cardRow.appendChild(cardColumn);
+  const cardHolder = document.createElement("div");
+  cardHolder.classList.add("card");
+  cardHolder.classList.add("text-center");
+  cardHolder.classList.add("align-items-center");
+  cardColumn.append(cardHolder);
+  const tag = document.createElement("div");
+  tag.classList.add("card-header");
+  tag.classList.add("fs-5");
+  tag.innerHTML = "WHAAAAT?";
+  const cardBody = document.createElement("div");
+  cardBody.classList.add("card-body");
+  const quote = document.createElement("p");
+  quote.classList.add("card-text");
+  quote.innerHTML = "";
+  const author = document.createElement("h5");
+  author.classList.add("card-title");
+  author.innerHTML = "It seems like something went wrong";
+  cardBody.append(quote, author);
+  const date = document.createElement("div");
+  date.classList.add("card-footer");
+  date.classList.add("text-muted");
+  date.innerHTML = "Error 404";
+  cardHolder.append(tag, cardBody, date);
+}
+
 function fillTheTags(result) {
   const allTags = document.getElementById("tags");
   const allStrings = result.map((tags) => tags.name);
-  const uniqueValues = new Set(allStrings);
-  console.log(uniqueValues);
-  uniqueValues.forEach((tags) => {
+  allStrings.forEach((tags) => {
     const option = document.createElement("option");
     option.value = tags;
     option.innerHTML = tags;
@@ -238,4 +295,14 @@ function checkForTag(result) {
   } else {
     allData(result);
   }
+}
+
+function hideElement(id) {
+  const element = document.getElementById(id);
+  element.classList.add("hide");
+}
+
+function showElement(id) {
+  const element = document.getElementById(id);
+  element.classList.remove("hide");
 }

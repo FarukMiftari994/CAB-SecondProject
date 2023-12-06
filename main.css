@@ -1,5 +1,5 @@
 body {
-  background-image: url(building.jpg);
+  background-image: url(/building.jpg);
 }
 
 .navbar {
@@ -21,6 +21,9 @@ body {
   font-family: cursive;
 }
 
+.hide {
+  display: none;
+}
 h5 {
   font-weight: bold;
 }
