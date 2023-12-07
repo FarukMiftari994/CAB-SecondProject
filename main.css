@@ -17,17 +17,20 @@ body {
 }
 
 .container {
-  font-weight: bold;
+  /* font-weight: bold; */
   font-family: cursive;
 }
 
 .hide {
   display: none;
 }
-h5 {
+h4 {
   font-weight: bold;
 }
 
+p {
+  font-size: 23px;
+}
 .row {
   padding: 30px;
 }
@@ -41,6 +44,7 @@ h5 {
 
 .card-header {
   border-radius: 20px;
+  font-weight: bold;
 }
 
 .col {

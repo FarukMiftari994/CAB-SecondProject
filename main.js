@@ -102,7 +102,7 @@ function allData(result) {
     const quote = document.createElement("p");
     quote.classList.add("card-text");
     quote.innerHTML = result[i].content;
-    const author = document.createElement("h5");
+    const author = document.createElement("h4");
     author.classList.add("card-title");
     author.innerHTML = result[i].author;
     cardBody.append(quote, author);
@@ -140,7 +140,7 @@ function noData() {
   const quote = document.createElement("p");
   quote.classList.add("card-text");
   quote.innerHTML = "";
-  const author = document.createElement("h5");
+  const author = document.createElement("h4");
   author.classList.add("card-title");
   author.innerHTML = "There's no Quote with the 'Selected Filters'";
   cardBody.append(quote, author);
